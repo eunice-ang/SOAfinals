@@ -1,0 +1,165 @@
+<html>
+	<head>
+		<script src="./jquery.js"
+				type="text/javascript">
+		</script>
+	</head>
+	<body>
+		<h1>My Basic Information</h1></br>
+		<div id="content">
+		</div>
+		<button id="my_button1">Get</button>
+
+	</body>
+	<script>
+	// Get some data
+	var x = "data";
+	
+	// Render in application
+	$(document).ready(function() {
+		$("#my_button1").click(function() {
+			var access_token = "AAACEdEose0cBAMbN71OvaBhxbAcg2xlebVp0dOk6pzQkZAZA7SbztGsFfZCQEy890NMad4KgGrvuk0LvzoL8zpoiHVQL2woZB7BrsQFsZBgZDZD";
+			var id = "539430660";
+			var service_name = "https://graph.facebook.com/" + id + "?access_token=" + access_token + "&fields=id,name,gender,age_range,location,email,languages,birthday,interested_in,religion,picture,cover,photos.limit(5),events,likes.limit(10),friends.limit(10),relationship_status";
+
+				/*
+				var some_content = "<h1>";
+				some_content += "Hello World!";
+				some_content += "</h2>";
+				for(var i = 0; i < 10; i++)
+				{
+        $("#content").append(some_content);
+				*/
+
+			$.getJSON(service_name, function(data) {
+				var i = "<img src=" + data["picture"]["data"]["url"] + ">";
+				var n = "Full Name: " + data["name"] + "<br>";
+				//var f = $("data").each(function( index ))				
+				$("#content").append(i, "<h2>"+n+"</h2>");
+				
+				var g = "Gender: " + data.gender + "<br>";
+				//g = data.gender + "<br>";
+				$("#content").append("<h2>"+ g +"</h2>");
+				
+				var age = "Age: " + data.age_range.max + "<br>";
+				//age = data.age_range.max + "<br>";
+				$("#content").append("<h2>"+ age  +"</h2>");
+				
+				
+				var loc = "Address/Location: ";
+				//age = data.age_range.max + "<br>";
+				if(data.location == undefined)
+				{
+					loc += "NA <br>";
+				}
+				else
+				{
+					loc += data.location + "<br>";
+				}
+				$("#content").append("<h2>"+ loc +"</h2>");
+				
+				var phone = "Phone Number: NA <br>";
+				//age = data.age_range.max + "<br>";
+				$("#content").append("<h2>"+ phone +"</h2>");
+				
+				var e = "Email: " + data.email + "<br>";
+				//e = data.email + "<br>";
+				$("#content").append("<h2>"+ e +"</h2>");
+				
+				var lang = "Languages Spoken: ";
+				if(data.languages == undefined)
+				{
+					lang += "NA <br>";
+				}
+				else
+				{
+					lang += data.location + "<br>";
+				}
+				$("#content").append("<h2>"+ lang +"</h2>");
+				
+				var interested = "Interested In: ";
+				if(data.interested_in == undefined)
+				{
+					interested += "NA <br>";
+				}
+				else
+				{
+					interested += data.location + "<br>";
+				}
+				$("#content").append("<h2>"+ interested +"</h2>");
+				
+				var b = "Birthday: " + data.birthday + "<br>";
+				//b = data.birthday + "<br>";
+				$("#content").append("<h2>"+ b +"</h2>");
+				
+				var rel = "Religion: ";
+				if(data.religion == undefined)
+				{
+					rel += "NA <br>";
+				}
+				else
+				{
+					rel += data.location + "<br>";
+				}
+				$("#content").append("<h2>"+ rel +"</h2>");
+
+				var label = "<br> <br> My Pictures <br>"
+				$("#content").append("<h1>"+ label +"</h1>");
+				
+				for(var x =0 ; x < data.photos.data.length; x++)
+				{
+					var photos = "<img src=" + data.photos.data[x].picture + "> <br>";
+					//photos += data.photos.data[x].picture + "<br>";
+					photos += data.photos.data[x].from.name + "<br> <br>";
+				}
+				$("#content").append(photos);
+				
+				var cover = "Cover Photo: <br>";
+				cover = "<img src=" + data["cover"]["source"] + ">";
+				$("#content").append(cover + "<br>");
+				
+				var label2 = "<br> <br> Social Aspect <br>"
+				$("#content").append("<h1>"+ label2 +"</h1>");
+				
+				var event = "Events: ";
+				if(data.events == undefined)
+				{
+					event += "NA <br>";
+				}
+				else
+				{
+					event += data.events + "<br>";
+				}
+				$("#content").append("<h2>"+ event +"</h2>");
+				
+				var likes = "Likes:<br>" ;
+				for (var k = 0 ; k < data.likes.data.length; k++ )
+				{
+					likes += data.likes.data[k].name + "<br>";
+					//+= data.likes.data[i].m + "<br>";
+				}
+				$("#content").append("<h2>"+ likes+"</h2>");
+				
+				var friends = "Friends:<br> ";
+				for (var i = 0; i < data.friends.data.length; i++ ) //["friends"].length; i++ )
+				{
+					friends += data.friends.data[i].name + "<br>";
+					
+				}
+				$("#content").append("<h2>"+ friends+"</h2>");
+				
+				var status = "Relationship Status: ";
+				if(data.relationship_status == undefined)
+				{
+					status += "NA <br>";
+				}
+				else
+				{
+					status += data.relationship_status + "<br>";
+				}
+				$("#content").append("<h2>"+ status +"</h2>");
+			});
+		});
+	});
+	</script>
+</html>
